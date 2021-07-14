@@ -4,7 +4,7 @@ import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 
-const name = "Sebastian Murgu";
+const name = "Input Practice Blog";
 export const siteTitle = "Next.js Sample Website";
 
 export default function Layout({ children, home }) {
@@ -26,6 +26,11 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_largy_image" />
       </Head>
       <header className={styles.header}>
+        <nav className={styles.navbar}>
+          <Link href="/Login">
+            <a>Log In</a>
+          </Link>
+        </nav>
         {home ? (
           <>
             <Image
@@ -59,6 +64,7 @@ export default function Layout({ children, home }) {
             </h2>
           </>
         )}
+        </header>
         <main>{children}</main>
         {!home && (
           <div className={styles.backToHome}>
@@ -67,7 +73,6 @@ export default function Layout({ children, home }) {
             </Link>
           </div>
         )}
-      </header>
     </div>
   );
 }
