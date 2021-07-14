@@ -1,8 +1,19 @@
 import Head from "next/head";
+import { useForm } from "react-hook-form";
 import Layout from "../components/layout";
 import styles from "../styles/authforms.module.css";
 
 export default function Login() {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const onSubmit = (e) => {
+    console.log(e);
+  };
+
   return (
     <Layout>
       <Head>
@@ -10,15 +21,33 @@ export default function Login() {
       </Head>
       <div className={styles.container}>
         <h2>Login</h2>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formField}>
-            <label for="username">Username</label>
-            <input id="username" name="username" type="text" />
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              {...register("username", {
+                required: "Username is required",
+              })}
+              type="text"
+            />
+            <p className={styles.error}>
+              {errors.username && errors.username.message}
+            </p>
           </div>
 
           <div className={styles.formField}>
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" />
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              {...register("password", {
+                required: "Password is required",
+              })}
+              type="password"
+            />
+            <p className={styles.error}>
+              {errors.password && errors.password.message}
+            </p>
           </div>
 
           <button type="submit">Submit</button>
