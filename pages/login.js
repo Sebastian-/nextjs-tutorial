@@ -1,9 +1,10 @@
 import Head from "next/head";
+import Layout from "../components/layout";
 import styles from "../styles/authforms.module.css";
 
 export default function Login() {
   return (
-    <>
+    <Layout>
       <Head>
         <title>Login</title>
       </Head>
@@ -23,6 +24,6 @@ export default function Login() {
           <button type="submit">Submit</button>
         </form>
       </div>
-    </>
+    </Layout>
   );
 }

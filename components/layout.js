@@ -1,13 +1,17 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "./layout.module.css";
+import styles from "../styles/layout.module.css";
 import utilStyles from "../styles/utils.module.css";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 const name = "Input Practice Blog";
 export const siteTitle = "Next.js Sample Website";
 
 export default function Layout({ children, home }) {
+  const router = useRouter();
+  const isLoginPage = router.pathname === "/login";
+
   return (
     <div className={styles.container}>
       <Head>
@@ -27,9 +31,11 @@ export default function Layout({ children, home }) {
       </Head>
       <header className={styles.header}>
         <nav className={styles.navbar}>
-          <Link href="/Login">
-            <a>Log In</a>
-          </Link>
+          {!isLoginPage ? (
+            <Link href="/login">
+              <a>Log In</a>
+            </Link>
+          ) : null}
         </nav>
         {home ? (
           <>
@@ -64,15 +70,15 @@ export default function Layout({ children, home }) {
             </h2>
           </>
         )}
-        </header>
-        <main>{children}</main>
-        {!home && (
-          <div className={styles.backToHome}>
-            <Link href="/">
-              <a>← Back to home</a>
-            </Link>
-          </div>
-        )}
+      </header>
+      <main>{children}</main>
+      {!home && (
+        <div className={styles.backToHome}>
+          <Link href="/">
+            <a>← Back to home</a>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
