@@ -9,6 +9,7 @@ export default function Login() {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm();
 
   const onSubmit = (e) => {
@@ -18,17 +19,25 @@ export default function Login() {
   return (
     <Layout>
       <Head>
-        <title>Login</title>
+        <title>Register</title>
       </Head>
       <div className={styles.container}>
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <h2>Register</h2>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className={styles.formField}>
             <label htmlFor="username">Username</label>
             <input
               id="username"
               {...register("username", {
                 required: "Username is required",
+                minLength: {
+                  value: 2,
+                  message: "Username must be at least 2 characters long",
+                },
+                pattern: {
+                  value: /^[A-Za-z0-9]+$/i,
+                  message: "Username can only contain letters and numbers",
+                },
               })}
               type="text"
             />
@@ -51,14 +60,26 @@ export default function Login() {
             </p>
           </div>
 
-          <button type="submit">Submit</button>
+          <div className={styles.formField}>
+            <label htmlFor="confirmedpw">Confirm Password</label>
+            <input
+              id="confirmedpw"
+              {...register("confirmedpw", {
+                required: "Password is required",
+                validate: (value) =>
+                  value === watch("password") || "Passwords do not match",
+              })}
+              type="password"
+            />
+            <p className={styles.error}>
+              {errors.confirmedpw && errors.confirmedpw.message}
+            </p>
+          </div>
+
+          <button type="submit" onClick={handleSubmit(onSubmit)}>
+            Submit
+          </button>
         </form>
-        <p>
-          Not registered?{" "}
-          <Link href="/register">
-            <a>Sign Up!</a>
-          </Link>
-        </p>
       </div>
     </Layout>
   );

@@ -10,7 +10,8 @@ export const siteTitle = "Next.js Sample Website";
 
 export default function Layout({ children, home }) {
   const router = useRouter();
-  const isLoginPage = router.pathname === "/login";
+  const isAuthPage =
+    router.pathname === "/login" || router.pathname === "/register";
 
   return (
     <div className={styles.container}>
@@ -31,7 +32,7 @@ export default function Layout({ children, home }) {
       </Head>
       <header className={styles.header}>
         <nav className={styles.navbar}>
-          {!isLoginPage ? (
+          {!isAuthPage ? (
             <Link href="/login">
               <a>Log In</a>
             </Link>
