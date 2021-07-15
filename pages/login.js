@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import Layout from "../components/layout";
 import styles from "../styles/authforms.module.css";
+import { useState } from "react";
 
 export default function Login() {
   const {
@@ -10,6 +11,8 @@ export default function Login() {
     formState: { errors },
     handleSubmit,
   } = useForm();
+
+  const [apiError, setAPIError] = useState("");
 
   const onSubmit = async (e) => {
     try {
@@ -26,7 +29,8 @@ export default function Login() {
         console.log(body);
       } else {
         // login failed
-        console.log(body.error.message);
+        console.log(response);
+        setAPIError(body.error.message);
       }
     } catch (e) {
       console.log(e);
@@ -40,6 +44,7 @@ export default function Login() {
       </Head>
       <div className={styles.container}>
         <h2>Login</h2>
+        {apiError && <p className={styles.apiError}>{apiError}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formField}>
             <label htmlFor="username">Username</label>

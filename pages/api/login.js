@@ -2,7 +2,7 @@ import { getUserData } from "../../lib/users";
 
 export default async function handler(req, res) {
   const { username, password } = await req.body;
-  const { users } = await getUserData();
+  const { users } = getUserData();
 
   if (users[username]?.password === password) {
     const response = { id: users[username].id, username };

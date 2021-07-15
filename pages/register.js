@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import Layout from "../components/layout";
 import styles from "../styles/authforms.module.css";
+import { useState } from "react";
 
 export default function Login() {
   const {
@@ -12,6 +13,8 @@ export default function Login() {
     watch,
   } = useForm();
 
+  const [apiError, setAPIError] = useState("");
+
   const onSubmit = async ({ username, password }) => {
     try {
       const response = await fetch("/api/register", {
@@ -19,16 +22,15 @@ export default function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
+      const body = await response.json();
 
       if (response.ok) {
         // registration success
         console.log("Registration successful");
-        const body = await response.json();
         console.log(body);
       } else {
         // registration failed
-        const body = await response.json();
-        console.log(body.error.message);
+        setAPIError(body.error.message);
       }
     } catch (e) {
       console.log(e);
@@ -42,6 +44,7 @@ export default function Login() {
       </Head>
       <div className={styles.container}>
         <h2>Register</h2>
+        {apiError && <p className={styles.apiError}>{apiError}</p>}
         <form onSubmit={(e) => e.preventDefault()}>
           <div className={styles.formField}>
             <label htmlFor="username">Username</label>
