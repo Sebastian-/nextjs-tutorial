@@ -11,8 +11,27 @@ export default function Login() {
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (e) => {
-    console.log(e);
+  const onSubmit = async (e) => {
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(e),
+      });
+
+      if (response.ok) {
+        // login success
+        console.log("Login successful");
+        const body = await response.json();
+        console.log(body);
+      } else {
+        // login failed
+        const body = await response.json();
+        console.log(body.error.message);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
