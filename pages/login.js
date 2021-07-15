@@ -18,15 +18,14 @@ export default function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(e),
       });
+      const body = await response.json();
 
       if (response.ok) {
         // login success
         console.log("Login successful");
-        const body = await response.json();
         console.log(body);
       } else {
         // login failed
-        const body = await response.json();
         console.log(body.error.message);
       }
     } catch (e) {

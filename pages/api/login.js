@@ -1,7 +1,8 @@
-import users from "./mock-users";
+import { getUserData } from "../../lib/users";
 
 export default async function handler(req, res) {
   const { username, password } = await req.body;
+  const { users } = await getUserData();
 
   if (users[username]?.password === password) {
     const response = { id: users[username].id, username };
