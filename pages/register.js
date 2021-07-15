@@ -12,8 +12,27 @@ export default function Login() {
     watch,
   } = useForm();
 
-  const onSubmit = (e) => {
-    console.log(e);
+  const onSubmit = async ({ username, password }) => {
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        // registration success
+        console.log("Registration successful");
+        const body = await response.json();
+        console.log(body);
+      } else {
+        // registration failed
+        const body = await response.json();
+        console.log(body.error.message);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
