@@ -1,12 +1,11 @@
-import { getUserData } from "../../lib/users";
+import { isValidAuth } from "../../lib/users";
 import withSession from "../../lib/withSession";
 
 export default withSession(async (req, res) => {
   const { username, password } = await req.body;
-  const { users } = getUserData();
 
-  if (users[username]?.password === password) {
-    const user = { id: users[username].id, username };
+  if (isValidAuth(username, password)) {
+    const user = { username };
     req.session.set("user", user);
     await req.session.save();
     res.status(200).json(user);
