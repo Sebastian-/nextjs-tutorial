@@ -1,9 +1,9 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import Layout from "../components/layout";
 import styles from "../styles/authforms.module.css";
 import { useState } from "react";
+import useUser from "../lib/useUser";
 
 export default function Login() {
   const {
@@ -14,6 +14,10 @@ export default function Login() {
   } = useForm();
 
   const [apiError, setAPIError] = useState("");
+  const { mutateUser } = useUser({
+    redirectTo: "/",
+    redirectIfFound: true,
+  });
 
   const onSubmit = async ({ username, password }) => {
     try {
@@ -26,13 +30,14 @@ export default function Login() {
 
       if (response.ok) {
         // registration success
-        console.log("Registration successful");
-        console.log(body);
+        setAPIError("");
+        mutateUser(body);
       } else {
         // registration failed
         setAPIError(body.error.message);
       }
     } catch (e) {
+      // request failed
       console.log(e);
     }
   };

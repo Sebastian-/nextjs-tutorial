@@ -13,6 +13,6 @@ export default async function handler(req, res) {
       .json({ error: { status: 400, message: "Username unavailable" } });
   } else {
     const newUser = addUser(username, password);
-    return res.status(200).json(newUser);
+    return res.status(200).json({ ...newUser, isLoggedIn: true });
   }
 }
