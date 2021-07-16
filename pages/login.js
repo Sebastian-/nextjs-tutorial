@@ -34,7 +34,6 @@ export default function Login() {
         mutateUser(body);
       } else {
         // login failed
-        console.log(response);
         setAPIError(body.error.message);
       }
     } catch (e) {
