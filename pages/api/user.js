@@ -1,4 +1,4 @@
-import withSession from "../../lib/session";
+import withSession from "../../lib/withSession";
 
 // endpoint for reading the user's session cookie and retrieving user data from it/database
 export default withSession(async (req, res) => {
