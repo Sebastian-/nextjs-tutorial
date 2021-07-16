@@ -2,7 +2,9 @@ import { isValidAuth } from "../../lib/users";
 import withSession from "../../lib/withSession";
 
 export default withSession(async (req, res) => {
-  const { username, password } = await req.body;
+  let { username, password } = await req.body;
+  username = username.trim();
+  password = password.trim();
 
   if (isValidAuth(username, password)) {
     const user = { username, isLoggedIn: true };

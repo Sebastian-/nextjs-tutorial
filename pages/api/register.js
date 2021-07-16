@@ -1,7 +1,9 @@
 import { addUser, isUser } from "../../lib/users";
 
 export default async function handler(req, res) {
-  const { username, password } = await req.body;
+  let { username, password } = await req.body;
+  username = username.trim();
+  password = password.trim();
 
   if (username.length < 2 || !username.match(/^[A-Za-z0-9]+$/i)) {
     return res
