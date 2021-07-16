@@ -1,15 +1,16 @@
 import { getUserData } from "../../lib/users";
+import withSession from "../../lib/withSession";
 
-export default async function handler(req, res) {
+export default withSession(async (req, res) => {
   const { username, password } = await req.body;
   const { users } = getUserData();
 
   if (users[username]?.password === password) {
-    const response = { id: users[username].id, username };
-    return res.status(200).json(response);
+    const user = { id: users[username].id, username };
+    req.session.set("user", user);
+    await req.session.save();
+    res.status(200).json(user);
   } else {
-    return res
-      .status(401)
-      .json({ error: { status: 401, message: "Invalid Login" } });
+    res.status(401).json({ error: { status: 401, message: "Invalid Login" } });
   }
-}
+});
