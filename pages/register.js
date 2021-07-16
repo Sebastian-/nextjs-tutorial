@@ -4,6 +4,7 @@ import Layout from "../components/layout";
 import styles from "../styles/authforms.module.css";
 import { useState } from "react";
 import useUser from "../lib/useUser";
+import router from "next/router";
 
 export default function Login() {
   const {
@@ -31,7 +32,7 @@ export default function Login() {
       if (response.ok) {
         // registration success
         setAPIError("");
-        mutateUser(body);
+        router.push("/login");
       } else {
         // registration failed
         setAPIError(body.error.message);
