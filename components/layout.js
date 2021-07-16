@@ -2,17 +2,13 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/layout.module.css";
 import utilStyles from "../styles/utils.module.css";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import AuthLink from "./authLink";
 
 const name = "Input Practice Blog";
 export const siteTitle = "Next.js Sample Website";
 
 export default function Layout({ children, home }) {
-  const router = useRouter();
-  const isAuthPage =
-    router.pathname === "/login" || router.pathname === "/register";
-
   return (
     <div className={styles.container}>
       <Head>
@@ -32,11 +28,7 @@ export default function Layout({ children, home }) {
       </Head>
       <header className={styles.header}>
         <nav className={styles.navbar}>
-          {!isAuthPage ? (
-            <Link href="/login">
-              <a>Log In</a>
-            </Link>
-          ) : null}
+          <AuthLink />
         </nav>
         {home ? (
           <>
