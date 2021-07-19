@@ -3,6 +3,9 @@ import Date from "../../components/date";
 import Layout from "../../components/layout";
 import utilStyles from "../../styles/utils.module.css";
 import { getAllPostIds, getPostData } from "../../lib/posts";
+import { useEffect } from "react";
+import { useStore } from "../../lib/store";
+import ViewCount from "../../components/viewCount";
 
 export async function getStaticProps({ params }) {
   const postData = await getPostData(params.id);
@@ -22,6 +25,14 @@ export async function getStaticPaths() {
 }
 
 export default function Post({ postData }) {
+  const { increment } = useStore((store) => ({
+    increment: store.incrementViewCount,
+  }));
+
+  useEffect(() => {
+    increment(postData.id);
+  }, []);
+
   return (
     <Layout>
       <Head>
@@ -31,7 +42,7 @@ export default function Post({ postData }) {
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
         <div className={utilStyles.lightText}>
-          <Date dateString={postData.date} />
+          <Date dateString={postData.date} /> <ViewCount postId={postData.id} />
         </div>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
