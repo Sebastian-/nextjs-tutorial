@@ -33,4 +33,8 @@ Default users for logging in:
   - based on [this example](https://github.com/vercel/next.js/tree/canary/examples/with-iron-session)
 - Login and Register forms with validation via react-hook-form
 - SWR hooks used to manage and provide user state
-- Greeting based on current user on the homepage
+- Homepage greeting based on current user
+- Client-based view counter using Zustand
+  - view counts for blog posts shown on the homepage and post page
+  - view count increments each time a post page is visited
+  - store integration based on [nextjs with zustand example](https://github.com/vercel/next.js/tree/canary/examples/with-zustand)
