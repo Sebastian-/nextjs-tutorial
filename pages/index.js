@@ -12,6 +12,15 @@ export async function getStaticProps() {
   return {
     props: {
       allPostsData,
+      initialZustandState: {
+        viewCounts: allPostsData.reduce(
+          (counts, { id }) => ({
+            ...counts,
+            [id]: 0,
+          }),
+          {}
+        ),
+      },
     },
   };
 }
@@ -37,7 +46,7 @@ export default function Home({ allPostsData }) {
               </Link>
               <br />
               <small className={utilStyles.lightText}>
-                <Date dateString={date} /> <ViewCount />
+                <Date dateString={date} /> <ViewCount postId={id} />
               </small>
             </li>
           ))}
