@@ -1,11 +1,13 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 import Date from '@/components/date'
 import Greeting from '@/components/greeting'
 import Layout, { siteTitle } from '@/components/layout'
 import ViewCount from '@/components/viewCount'
 import { getSortedPostsData } from '@/lib/posts'
+import { getRecentTweets } from '@/lib/twitterAPI'
 import utilStyles from '@/styles/utils.module.css'
 
 export async function getStaticProps() {
@@ -27,6 +29,23 @@ export async function getStaticProps() {
 }
 
 export default function Home({ allPostsData }) {
+  useEffect(() => {
+    const fetchTweets = async () => {
+      try {
+        const response = await fetch('/api/tweets', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: 'wc_nanaimo' }),
+        })
+        const body = await response.json()
+      } catch (e) {
+        // request failed
+        console.log(e)
+      }
+    }
+    fetchTweets()
+  }, [])
+
   return (
     <Layout home>
       <Head>
