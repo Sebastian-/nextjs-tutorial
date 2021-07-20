@@ -1,6 +1,6 @@
-import withSession from "../../lib/withSession";
+import withSession from '@/lib/withSession'
 
 export default withSession(async (req, res) => {
-  req.session.destroy();
-  res.json({ isLoggedIn: false });
-});
+  req.session.destroy()
+  res.json({ isLoggedIn: false })
+})
