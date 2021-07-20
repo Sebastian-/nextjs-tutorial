@@ -7,8 +7,7 @@ import useUser from '@/lib/useUser'
 export default function AuthLink() {
   const { user, mutateUser } = useUser()
   const router = useRouter()
-  const isAuthPage =
-    router.pathname === '/login' || router.pathname === '/register'
+  const isAuthPage = router.pathname.includes('/login', '/register')
 
   if (isAuthPage) return null
 
