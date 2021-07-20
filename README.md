@@ -4,10 +4,10 @@ This project is an extension of the NextJS tutorial found at: [Learn Next.js](ht
 
 ## Setup
 
-Create a `.env.local` file containing a password for cookie encryption. Should look something like this:
+Create a `.env.local` file containing a password for cookie encryption. Should look something like this (password must be 32 characters):
 
 ```
-COOKIE_PASSWORD=oiquwrehyilasdhgflasjdghila
+COOKIE_PASSWORD=p50qGE5rhCCUMEBtuM7QLofUkZCog3xa
 ```
 
 Start the dev server:
