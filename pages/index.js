@@ -40,9 +40,7 @@ export default function Home({ allPostsData }) {
         </p>
       </section>
       <section className={utilStyles.headingMd}>
-        <h2 className={utilStyles.headingLg}>
-          Current Conditions at the Nanaimo Office
-        </h2>
+        <h2 className={utilStyles.headingLg}>Current Conditions in Nanaimo</h2>
         <NanaimoWeather />
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>

@@ -74,7 +74,7 @@ export default function NanaimoWeather() {
   return (
     <div>
       <ul className={utilStyles.list}>
-        {temp ? <li>🌡 {`Temperature: ${temp} C°`}</li> : null}
+        {temp ? <li>🌡️ {`Temperature: ${temp} C°`}</li> : null}
         {wind ? <li>🌫 {`Wind: ${wind}`}</li> : null}
         {humidity ? <li>💧 {`Humidity: ${humidity}`}</li> : null}
       </ul>
