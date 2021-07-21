@@ -2,12 +2,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect } from 'react'
 
-import Date from '@/components/date'
+import FormattedDate from '@/components/date'
 import Greeting from '@/components/greeting'
 import Layout, { siteTitle } from '@/components/layout'
-import ViewCount from '@/components/viewCount'
-import fetcher from '@/lib/fetchJSON'
 import NanaimoWeather from '@/components/nanaimoWeather'
+import ViewCount from '@/components/viewCount'
 import { getSortedPostsData } from '@/lib/posts'
 import utilStyles from '@/styles/utils.module.css'
 
@@ -30,24 +29,6 @@ export async function getStaticProps() {
 }
 
 export default function Home({ allPostsData }) {
-  useEffect(() => {
-    const fetchWeatherTweet = async () => {
-      const NANAIMO_WEATHER_USERNAME = 'wc_nanaimo'
-      try {
-        const tweets = await fetcher('/api/tweets', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: NANAIMO_WEATHER_USERNAME }),
-        })
-        console.log(tweets)
-      } catch (e) {
-        // request failed
-        console.log(e)
-      }
-    }
-    //fetchWeatherTweet()
-  }, [])
-
   return (
     <Layout home>
       <Head>
@@ -74,7 +55,7 @@ export default function Home({ allPostsData }) {
               </Link>
               <br />
               <small className={utilStyles.lightText}>
-                <Date dateString={date} /> <ViewCount postId={id} />
+                <FormattedDate dateString={date} /> <ViewCount postId={id} />
               </small>
             </li>
           ))}
