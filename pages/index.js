@@ -6,8 +6,9 @@ import Date from '@/components/date'
 import Greeting from '@/components/greeting'
 import Layout, { siteTitle } from '@/components/layout'
 import ViewCount from '@/components/viewCount'
+import fetcher from '@/lib/fetchJSON'
+import NanaimoWeather from '@/components/nanaimoWeather'
 import { getSortedPostsData } from '@/lib/posts'
-import { getRecentTweets } from '@/lib/twitterAPI'
 import utilStyles from '@/styles/utils.module.css'
 
 export async function getStaticProps() {
@@ -30,20 +31,21 @@ export async function getStaticProps() {
 
 export default function Home({ allPostsData }) {
   useEffect(() => {
-    const fetchTweets = async () => {
+    const fetchWeatherTweet = async () => {
+      const NANAIMO_WEATHER_USERNAME = 'wc_nanaimo'
       try {
-        const response = await fetch('/api/tweets', {
+        const tweets = await fetcher('/api/tweets', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: 'wc_nanaimo' }),
+          body: JSON.stringify({ username: NANAIMO_WEATHER_USERNAME }),
         })
-        const body = await response.json()
+        console.log(tweets)
       } catch (e) {
         // request failed
         console.log(e)
       }
     }
-    fetchTweets()
+    //fetchWeatherTweet()
   }, [])
 
   return (
@@ -55,6 +57,12 @@ export default function Home({ allPostsData }) {
         <p>
           <Greeting /> Welcome to my rendition of the nextjs tutorial 🎉
         </p>
+      </section>
+      <section className={utilStyles.headingMd}>
+        <h2 className={utilStyles.headingLg}>
+          Current Conditions at the Nanaimo Office
+        </h2>
+        <NanaimoWeather />
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
