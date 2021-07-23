@@ -39,7 +39,7 @@ module.exports = {
             group: 'internal',
           },
         ],
-        pathGroupsExcludedImportTypes: ['builtin'],
+        pathGroupsExcludedImportTypes: ['builtin', 'external'],
         'newlines-between': 'always',
       },
     ],
