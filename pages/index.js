@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useEffect } from 'react'
 
 import FormattedDate from '@/components/date'
 import Greeting from '@/components/greeting'
@@ -34,15 +33,18 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
+
       <section className={utilStyles.headingMd}>
         <p>
           <Greeting /> Welcome to my rendition of the nextjs tutorial 🎉
         </p>
       </section>
+
       <section className={utilStyles.headingMd}>
         <h2 className={utilStyles.headingLg}>Current Conditions in Nanaimo</h2>
         <NanaimoWeather />
       </section>
+
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
