@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import Layout from '@/components/layout'
-import useUser from '@/lib/useUser'
+import urls from '@/consts/urls'
 import styles from '@/styles/authforms.module.css'
 
 export default function Login() {
@@ -16,14 +16,10 @@ export default function Login() {
   } = useForm()
 
   const [apiError, setAPIError] = useState('')
-  const { mutateUser } = useUser({
-    redirectTo: '/',
-    redirectIfFound: true,
-  })
 
   const onSubmit = async ({ username, password }) => {
     try {
-      const response = await fetch('/api/register', {
+      const response = await fetch(urls.api.register, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -36,7 +32,7 @@ export default function Login() {
         router.push('/login')
       } else {
         // registration failed
-        setAPIError(body.error.message)
+        setAPIError(body.non_field_errors)
       }
     } catch (e) {
       // request failed
