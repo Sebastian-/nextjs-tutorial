@@ -1,10 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import router from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import Layout from '@/components/layout'
-import useUser from '@/lib/useUser'
+import urls from '@/consts/urls'
+import { useStore } from '@/lib/store'
 import styles from '@/styles/authforms.module.css'
 
 export default function Login() {
@@ -13,18 +15,14 @@ export default function Login() {
     formState: { errors },
     handleSubmit,
   } = useForm()
-
   const [apiError, setAPIError] = useState('')
-  const { mutateUser } = useUser({
-    redirectTo: '/',
-    redirectIfFound: true,
-  })
+  const setIsLoggedIn = useStore((store) => store.setIsLoggedIn)
 
   const onSubmit = async (e) => {
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch(urls.api.login, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: new Headers({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(e),
       })
       const body = await response.json()
@@ -32,10 +30,12 @@ export default function Login() {
       if (response.ok) {
         // login success
         setAPIError('')
-        mutateUser(body)
+        localStorage.setItem('authToken', body.token)
+        setIsLoggedIn(true)
+        router.push('/')
       } else {
         // login failed
-        setAPIError(body.error.message)
+        setAPIError(body.non_field_errors)
       }
     } catch (e) {
       // request failed
@@ -50,7 +50,14 @@ export default function Login() {
       </Head>
       <div className={styles.container}>
         <h2>Login</h2>
-        {apiError && <p className={styles.apiError}>{apiError}</p>}
+
+        {apiError &&
+          apiError.map((error, index) => (
+            <p key={index} className={styles.apiError}>
+              {error}
+            </p>
+          ))}
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formField}>
             <label htmlFor='username'>Username</label>
