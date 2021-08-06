@@ -50,6 +50,7 @@ module.exports = {
         ['@/components', './components'],
         ['@/styles', './styles'],
         ['@/lib', './lib'],
+        ['@/consts', './consts'],
       ],
     },
   },
